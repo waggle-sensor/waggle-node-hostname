@@ -1,0 +1,14 @@
+[Unit]
+Description=Waggle Hostname Service
+After=syslog.service waggle-nodeid.service
+Before=k3s.service
+Wants=syslog.service waggle-nodeid.service
+
+[Service]
+ExecStart=/usr/bin/waggle_node_hostname.py -c /etc/waggle/node-id
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+WantedBy=k3s.service
