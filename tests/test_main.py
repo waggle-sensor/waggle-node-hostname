@@ -3,7 +3,6 @@
 import os
 import pytest
 import shutil
-import time
 from click.testing import CliRunner
 from ROOTFS.usr.bin.waggle_node_hostname import main
 from pathlib import Path
@@ -17,10 +16,6 @@ def test_default_nodeid():
     runner = CliRunner()
     result = runner.invoke(main)
     assert result.exit_code == 0
-
-    # assert the log file exists, sleep to give time to flush log to disk
-    time.sleep(2)
-    assert Path("/var/log/waggle/waggle.log").exists()
 
     # assert the /etc/hostname file exists
     assert Path("/etc/hostname").exists()
