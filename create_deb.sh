@@ -13,6 +13,7 @@ Maintainer: sagecontinuum.org
 Description: Service to set the hostname on Waggle nodes.
 Architecture: ${ARCH}
 Priority: optional
+Depends: python3-click
 EOF
 
 # add control files
