@@ -3,6 +3,6 @@
 case "${1}" in
   configure)
     # enable the service to run on on boot
-    systemctl enable node-hostname.service
+    systemctl enable waggle-node-hostname.service
   ;;
 esac
