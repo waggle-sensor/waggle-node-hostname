@@ -5,7 +5,7 @@ Before=k3s.service
 Wants=waggle-nodeid.service
 
 [Service]
-ExecStart=/usr/bin/waggle_node_hostname.py -c /etc/waggle/node-id
+ExecStart=/usr/bin/waggle_node_hostname.py -n /etc/waggle/node-id
 Type=oneshot
 RemainAfterExit=yes
 
