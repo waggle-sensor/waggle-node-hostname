@@ -8,6 +8,8 @@ Wants=waggle-nodeid.service
 ExecStart=/usr/bin/waggle_node_hostname.py -n /etc/waggle/node-id
 Type=oneshot
 RemainAfterExit=yes
+Restart=on-failure
+RestartSec=30
 
 [Install]
 WantedBy=default.target

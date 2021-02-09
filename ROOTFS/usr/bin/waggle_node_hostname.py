@@ -6,6 +6,7 @@ import uuid
 import socket
 from pathlib import Path
 
+software_version = "{{VERSION}}"
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 
@@ -40,6 +41,7 @@ def set_hostname(nodeid=None):
 
 
 @click.command()
+@click.version_option(version=software_version, message=f'version: %(version)s')
 @click.option(
     "-n", "--nodeid", "nodeid_file", default=def_nodeid, help="node ID file to use"
 )
