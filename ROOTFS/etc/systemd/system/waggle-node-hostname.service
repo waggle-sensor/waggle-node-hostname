@@ -1,16 +1,13 @@
 [Unit]
 Description=Waggle Hostname Service
-After=waggle-nodeid.service
-Before=k3s.service
-Wants=waggle-nodeid.service
+Before=network-pre.target
+Wants=network-pre.target
+ConditionPathExists=/etc/waggle/node-id
 
 [Service]
 ExecStart=/usr/bin/waggle_node_hostname.py -n /etc/waggle/node-id
 Type=oneshot
 RemainAfterExit=yes
-Restart=on-failure
-RestartSec=30
 
 [Install]
 WantedBy=default.target
-WantedBy=k3s.service

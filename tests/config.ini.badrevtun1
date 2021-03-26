@@ -1,0 +1,5 @@
+[system]
+name = ws-nxcore
+
+[reverse-tunnel-missing]
+key = /etc/waggle/bk_key.pem
