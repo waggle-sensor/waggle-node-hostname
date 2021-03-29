@@ -2,7 +2,7 @@
 
 case "${1}" in
   configure)
-    # enable the service to run on on boot
+    # enable the service to run on system shutdown
     systemctl enable waggle-node-hostname.service
   ;;
 esac

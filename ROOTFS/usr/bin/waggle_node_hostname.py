@@ -16,17 +16,20 @@ def_nodeid = "/etc/waggle/node-id"
 config_file = "/etc/waggle/config.ini"
 
 
-def set_hostname(sysname=None, nodeid=None):
+def set_hostname(sysname=None, nodeid=None, defer=False):
     """Set the system hostname to '<sysname>-<nodeid>'
 
     Arguments:
         sysname (str): the system name to prepend to the hostname
         nodeid (str): the Node ID name to postpend to the hostname
+        defer (bool): cache hostname change only (if True); else set now also
 
     Returns:
         none, exception on error
     """
-    logging.info(f"Set the system hostname [sysname: {sysname} | nodeid: {nodeid}]")
+    logging.info(
+        f"Set the system hostname [sysname: {sysname} | nodeid: {nodeid} | defer: {defer}]"
+    )
 
     if not sysname:
         raise Exception("Unable to set hostname, `sysname` must not be empty")
@@ -42,13 +45,16 @@ def set_hostname(sysname=None, nodeid=None):
 
     hostname = f"{sysname}-{nodeid}"
 
-    # set the hostname for this and future boots
-    try:
-        socket.sethostname(hostname)
-        logging.info(f"Successfuly set the run-time hostname [{hostname}]")
-    except:
-        logging.warning(f"Unable to set the run-time hostname [{hostname}]")
-        pass
+    if not defer:
+        # set the hostname now
+        try:
+            socket.sethostname(hostname)
+            logging.info(f"Successfuly set the run-time hostname [{hostname}]")
+        except:
+            logging.warning(f"Unable to set the run-time hostname [{hostname}]")
+            pass
+
+    # set the hostname for future system boots
     with open("/etc/hostname", "w") as file:
         file.write(hostname)
 
@@ -58,8 +64,16 @@ def set_hostname(sysname=None, nodeid=None):
 @click.option(
     "-n", "--nodeid", "nodeid_file", default=def_nodeid, help="node ID file to use"
 )
-def main(nodeid_file):
-    logging.info(f"Waggle set hostname [node ID file: {nodeid_file}]")
+@click.option(
+    "-d",
+    "--defer",
+    is_flag=True,
+    default=False,
+    show_default=True,
+    help="cache hostname for next boot only",
+)
+def main(nodeid_file, defer):
+    logging.info(f"Waggle set hostname [node ID file: {nodeid_file} | defer: {defer}]")
 
     config = configparser.ConfigParser()
     try:
@@ -95,7 +109,7 @@ def main(nodeid_file):
         logging.error(f"Unable to read node ID from file [{nodeid_file}]")
         sys.exit(1)
 
-    set_hostname(sysname, nodeid)
+    set_hostname(sysname, nodeid, defer)
 
 
 if __name__ == "__main__":

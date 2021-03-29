@@ -18,6 +18,7 @@ EOF
 
 # add control files
 cp -p deb/install/postinst ${BASEDIR}/DEBIAN/
+cp -p deb/install/prerm ${BASEDIR}/DEBIAN/
 
 # add core files
 cp -r ROOTFS/etc ${BASEDIR}/

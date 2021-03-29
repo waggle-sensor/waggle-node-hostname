@@ -1,13 +1,13 @@
 [Unit]
 Description=Waggle Hostname Service
-Before=network-pre.target
-Wants=network-pre.target
+DefaultDependencies=no
+Before=shutdown.target
 ConditionPathExists=/etc/waggle/node-id
 
 [Service]
-ExecStart=/usr/bin/waggle_node_hostname.py -n /etc/waggle/node-id
+ExecStart=/usr/bin/waggle_node_hostname.py -n /etc/waggle/node-id --defer
 Type=oneshot
-RemainAfterExit=yes
+TimeoutStartSec=30
 
 [Install]
-WantedBy=default.target
+WantedBy=shutdown.target
