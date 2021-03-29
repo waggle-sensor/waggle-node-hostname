@@ -1,8 +1,15 @@
 # Waggle Node Hostname Service
 
-An early boot service that sets the Debian OS hostname to the unique Node ID
-found in the `/etc/waggle/node-id` file. If the file is not found the service
-fails and exists with an error.
+An shutdown service that sets the Debian OS hostname to the system name
+(gathered from config, `/etc/waggle/config.ini`) combined with the unique
+Node ID found in the `/etc/waggle/node-id` file.
+
+```
+<system name>-<node ID>
+```
+
+To be executed on system shutdown to ensure the hostname is correct for
+the next boot.
 
 ## Build Instructions
 

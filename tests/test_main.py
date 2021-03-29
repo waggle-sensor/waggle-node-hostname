@@ -42,6 +42,22 @@ def test_default_nodeid_sysname(helper):
     assert content == "ws-nxcore-0000ABCDEF123456"
 
 
+def test_default_nodeid_sysname_defer(helper):
+    """Test default (from disk) nodeid and sysname (from config) works w/ defer"""
+    runner = CliRunner()
+    result = runner.invoke(main, ["--defer"])
+    assert result.exit_code == 0
+
+    # assert the /etc/hostname file exists
+    assert Path("/etc/hostname").exists()
+
+    # assert hostname is correct
+    with open("/etc/hostname", "r") as file:
+        content = file.readline()
+    assert len(content) == 26
+    assert content == "ws-nxcore-0000ABCDEF123456"
+
+
 def test_input_nodeid(helper):
     """Test provided nodeid and default sysname (from config) works"""
     runner = CliRunner()
