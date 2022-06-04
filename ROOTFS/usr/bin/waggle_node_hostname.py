@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-import click
 import configparser
 import logging
 import socket
 import sys
 import uuid
 from pathlib import Path
+
+import click
 
 software_version = "{{VERSION}}"
 
@@ -34,9 +35,7 @@ def set_hostname(sysname=None, nodeid=None, defer=False):
     if not sysname:
         raise Exception("Unable to set hostname, `sysname` must not be empty")
     if not isinstance(sysname, str):
-        raise TypeError(
-            f"Unable to set hostname, `sysname` [{sysname}] must be a string"
-        )
+        raise TypeError(f"Unable to set hostname, `sysname` [{sysname}] must be a string")
 
     if not nodeid:
         raise Exception("Unable to set hostname, `nodeid` must not be empty")
@@ -61,9 +60,7 @@ def set_hostname(sysname=None, nodeid=None, defer=False):
 
 @click.command()
 @click.version_option(version=software_version, message=f"version: %(version)s")
-@click.option(
-    "-n", "--nodeid", "nodeid_file", default=def_nodeid, help="node ID file to use"
-)
+@click.option("-n", "--nodeid", "nodeid_file", default=def_nodeid, help="node ID file to use")
 @click.option(
     "-d",
     "--defer",
